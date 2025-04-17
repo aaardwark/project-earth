@@ -1,0 +1,59 @@
+A spheroid with any three radii, in any orientation, can be created by stretching a unit sphere in three orthogonal directions: 
+Take a unit sphere centred at origin. 
+Choose a vector along which to stretch it by some positive factor, with the orthogonal plane through origin as the invariant.
+Choose a second vector that is orthogonal to the first, and stretch by some other factor. Repeat for a third vector.
+
+The parameters here would be the directions of the three axes and their respective lengths.
+
+
+To find the equation of a transformed sphere, consider what happens to a point (x0, y0, z0) when a stretch by factor k is applied, with vector (a, b, c)
+
+First drop a perpendicular to the invariant plane: it is the locus (x0 - at, y0 - bt, z0 - ct)
+Find the distance vector from the intersection of the locus with invariant plane to the point, and scale it by a factor of k.
+
+The intersection satisfies a(x0 - at) + b(y0 - bt) + c(z0 - ct) = 0
+(ax0 + by0 + cz0) - t(a^2 + b^2 + c^2) = 0
+t = (ax0 + by0 + cz0) / (a^2 + b^2 + c^2)
+
+The distance vector is then (x0, y0, z0) - (x0 - at, y0 - bt, z0 - ct) = t(a, b, c)
+The new point will have a distance vector of kt(a, b, c)
+Adding this vector to the intersection gives 
+(x0 - at, y0 - bt, z0 - ct) + kt(a, b, c) = (x0 - a(1-k)t, y0 - b(1-k)t, z0 - c(1-k)t)   where   t = (ax0 + by0 + cz0)/(a^2 + b^2 + c^2)
+
+x1 = x0 - a(1-k)(ax0 + by0 + cz0)/(a^2 + b^2 + c^2)
+y1 = y0 - b(1-k)(ax0 + by0 + cz0)/(a^2 + b^2 + c^2)
+z1 = z0 - c(1-k)(ax0 + by0 + cz0)/(a^2 + b^2 + c^2)
+
+----------------------------------------------------------------
+A simpler way to create any spheroid is to start with a sphere of some given radius and stretch it in just two (orthogonal) directions. The starting radius eliminates the need for a third stretch. We will be doing it this way below.
+----------------------------------------------------------------
+
+
+The equation (x+1)^2 - y = 0 
+IS TO 
+The equation x^2 - y = 0 and a translation by (1, 0)
+AS
+The [LONG EQUATION] (x - a(1-k)(ax + by + cz)/(a^2 + b^2 + c^2))^2 + (x - a(1-k)(ax + by + cz)/(a^2 + b^2 + c^2))^2 + (x - a(1-k)(ax + by + cz)/(a^2 + b^2 + c^2))^2 = 1
+IS TO
+The equation x^2 + y^2 + z^2 = 1 and the above stretch transformation
+
+So just as translating the curve of (x+1)^2 - y = 0 by (1, 0) gives the curve of x^2 - y
+Stretching the surface [LONG EQUATION] by a factor of k gives the unit sphere. That is, [LONG EQUATION] is the unit sphere stretched by 1/k
+It follows that if we replaced each 'k' in [LONG EQUATION] by '1/k' then that would be the unit sphere stretched by k.
+
+In general, use the inverse of the transform in the equation for it to give you the transformed shape 
+
+----------------------------------------------------------------
+
+Now generate the equation for a spheroid. Start with a sphere, the locus of points (x, y, z) such that x^2 + y^2 + z^2 = r^2
+
+Transform 1: Stretch by nonzero scale factor k1 and nonzero vector (a1, b1, c1)
+x1 = x - a1(1 - 1/k1)(a1*x + b1*y + c1*z)/(a1^2 + b1^2 + c1^2)
+y1 = y - b1(1 - 1/k1)(a1*x + b1*y + c1*z)/(a1^2 + b1^2 + c1^2)
+z1 = z - c1(1 - 1/k1)(a1*x + b1*y + c1*z)/(a1^2 + b1^2 + c1^2)
+
+Transform 2: Stretch by nonzero scale factor k2 and nonzero vector (a2, b2, c2) that is orthogonal to (a1, b1, c1)
+x2 = x1 - a2(1 - 1/k2)(a2*x1 + b2*y1 + c2*z1)/(a2^2 + b2^2 + c2^2)
+See x2.png for the full form in terms of x, y, z.
+The expressions for y and z are simply related to these, by replacement of 'a' by b or c as appropriate.
+

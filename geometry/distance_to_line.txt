@@ -1,0 +1,37 @@
+Find the shortest (perpendicular) distance from a point p0 with coordinates (x0, y0, z0)
+to a line with parametric form (at + p, bt + q, ct + r)
+
+Method:
+1. Shift the reference frame so that the point is at origin
+2. Find a plane perpendicular to the line, which passes through origin
+3. Find the intersection of the line and the plane
+4. Find the distance from the intersection to origin
+
+
+1.
+Translate everything by a vector (-x0, -y0, -z0)
+p0 goes to (0,0,0)
+the line goes to ( at + (p-x0), bt + (q-y0), ct + (r-z0) )
+
+2.
+The plane's equation is ax + by + cz = 0
+
+3.
+If (aa + bb + cc) is not zero, (which it can only be if a, b and c are zero - an impossibility for a plane),
+then at the intersection of the line and the plane (formula from the intersection of a plane and a line):
+t = -(a(p-x0) + b(q-y0) + c(r-z0))/(aa + bb + cc)
+t = -((ap + bq + cr) - (ax0 + by0 + cz0))/(aa + bb + cc)
+t = ((ax0 + by0 + cz0) - (ap + bq + cr))/(aa + bb + cc)
+
+4.
+The modulus of a particular point on the line ( at + (p-x0), bt + (q-y0), ct + (r-z0) ) is:
+(at + (p-x0))^2 + (bt + (q-y0))^2 + (ct + (r-z0))^2
+(aa + bb + cc)t^2 + 2(a(p-x0) + b(q-y0) + c(r-z0))t + ((p-x0)^2 + (q-y0)^2 + (r-z0)^2)
+(aa + bb + cc)t^2 + 2((ap + bq + cr) - (ax0 + by0 + cz0))t + (pp + qq + rr + x0x0 + y0y0 + z0z0 - 2(px0 + qy0 + rz0))
+
+Plugging in our value of t from the previous step (a bit monstrous):
+(aa + bb + cc)((ax0 + by0 + cz0) - (ap + bq + cr))^2/(aa + bb + cc)^2 + 2((ap + bq + cr) - (ax0 + by0 + cz0))((ax0 + by0 + cz0) - (ap + bq + cr))/(aa + bb + cc) + (pp + qq + rr + x0x0 + y0y0 + z0z0 - 2(px0 + qy0 + rz0))
+
+((ax0 + by0 + cz0) - (ap + bq + cr))^2/(aa + bb + cc) - 2((ax0 + by0 + cz0) - (ap + bq + cr))^2/(aa + bb + cc) + (pp + qq + rr + x0x0 + y0y0 + z0z0 - 2(px0 + qy0 + rz0))
+
+-((ax0 + by0 + cz0) - (ap + bq + cr))^2/(aa + bb + cc) + (pp + qq + rr + x0x0 + y0y0 + z0z0 - 2(px0 + qy0 + rz0))

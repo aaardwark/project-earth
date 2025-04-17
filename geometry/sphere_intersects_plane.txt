@@ -1,0 +1,9 @@
+(x - a)^2 + (y - b)^2 + (z - c)^2 = r^2
+xx - 2ax + aa + yy - 2by + bb + zz - 2cz + cc = rr
+xx + yy + zz - rr - (2ax + 2by + 2cz) = 0
+
+Ax + By + Cz + D = 0 = xx + yy + zz - rr - (2ax + 2by + 2cz)
+Ax + By + Cz = - D = xx + yy + zz - rr - D - (2ax + 2by + 2cz)
+
+(A+2a)x + (B+2b) + (C+2c)z = 2(ax + by + cz) - D = xx + yy + zz - rr - D
+

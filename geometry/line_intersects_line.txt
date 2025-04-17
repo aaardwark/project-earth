@@ -1,0 +1,59 @@
+line l1 is the locus of all points (at+b, ct+d, et+f)
+
+line l2 is the locus of all points (As+B, Cs+D, Es+F)
+
+where t and s take on all real values
+
+
+the values of t and s at the intersection point I of l1 and l2 satisfy:
+
+at+b = As+B
+ct+d = Cs+D
+et+f = Es+F
+
+rearranging,
+
+t = (As+B-b)/a  OR  at-As+b-B = 0
+t = (Cs+D-d)/c  OR  ct-Cs+d-D = 0
+t = (Es+F-f)/e  OR  et-Es+f-F = 0
+
+equivalently:
+t = (As+B-b)/a = (Cs+D-d)/c = (Es+F-f)/e  OR  at-As+b-B = ct-Cs+d-D = et-Es+f-F = 0
+
+Going with the first option, and cross-multiplying to avoid zero division:
+acet = ce(As+B-b) = ae(Cs+D-d) = ac(Es+F-f)
+
+
+Hence we can solve the first two expressions for s:
+
+ce(As+B-b) - ae(Cs+D-d) = 0
+c(As+B-b) - a(Cs+D-d) = 0
+cAs + c(B-b) - aCs - a(D-d) = 0
+(cA - aC)s = a(D-d) - c(B-b)
+s = (a(D-d) - c(B-b))/(cA - aC)
+s = ((aD-ad) - (cB-cb))/(cA - aC)
+s = (aD - ad - cB + cb)/(cA - aC)
+
+and then the first and third expressions, separately:
+
+ce(As+B-b) - ac(Es+F-f) = 0
+e(As+B-b) - a(Es+F-f) = 0
+eAs + e(B-b) - aEs - a(F-f) = 0
+(eA - aE)s = a(F-f) - e(B-b)
+s = (a(F-f) - e(B-b))/(eA - aE)
+s = ((aF-af) - (eB-eb))/(eA - aE)
+s = (aF - af - eB + eb)/(eA - aE)
+
+
+Now these two values of s have to be equal for all three expressions to be equal at once, so:
+
+if (aD - ad - cB + cb)/(cA - aC) = (aF - af - eB + eb)/(eA - aE) or equivalently,
+if (eA - ae)(aD - ad - cB + cb) = (cA - aC)(aF - af - eB + eb) then there is an intersection
+
+At the intersection, both these expressions evaluate to s:
+(aD - ad - eB + eb)/(cA - aC)
+(aF - af - eB + eb)/(eA - aE)
+
+And we can plug this s into: 
+any of the three expressions to get t
+the three parametrisations to give the coordinates of intersection point I

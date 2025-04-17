@@ -1,0 +1,59 @@
+Find the intersection of two planes:
+ax + by + cz + d = 0
+Ax + By + Cz + D = 0
+
+If parallel (a:A :: b:B :: c:C) but not identical (a:A :: b:B :: c:C :: d:D), return None.
+If identical, return either one of them.
+If not parallel, return the Line that lies on both of them.
+
+ax + by + cz + d = 0 = Ax + By + Cz + D
+Cax + Cby + Ccz + Cd = 0 = cAx + cBy + cCz + cD
+Cax + Cby + Cd = - cCz = cAx + cBy + cD
+
+(Cax + Cby + Cd) - (cAx + cBy + cD) = (- cCz) - (- cCz) = 0
+(Ca - cA)x + (Cb - cB)y + (Cd - cD) = 0
+((Ca - cA)x + Cd) + ((Cb - cB)y - cD) = 0
+(Ca - cA)(x + Cd/(Ca - cA)) + (Cb - cB)(y - cD/(Cb - cB)) = 0
+
+This equation is true when
+(x + Cd/(Ca - cA)) : (y - cD/(Cb - cB))  ::  (Cb - cB) : (Ca - cA)
+So one possible pair of values of (x + Cd/(Ca - cA)) and (y - cD/(Cb - cB))
+is (Cb - cB) and (Ca - cA)
+Then x = (Cb - cB) - Cd/(Ca - cA)  and  y = (Ca - cA) + cD/(Cb - cB)
+Scale them both up by a factor of c(Ca - cA)(Cb - cB):
+x = c(Ca - cA)(Cb - cB)(Cb - cB) - c(Cb - cB)Cd
+y = c(Ca - cA)(Ca - cA)(Cb - cB) + c(Ca - cA)cD
+(This maintains the ratio and eliminates the denominator.)
+
+Plug x and y back into the first plane's equation:
+ac(Ca - cA)(Cb - cB)(Cb - cB) - ac(Cb - cB)Cd + bc(Ca - cA)(Ca - cA)(Cb - cB) + bc(Ca - cA)cD + cz + d = 0
+cz = - ac(Ca - cA)(Cb - cB)(Cb - cB) + ac(Cb - cB)Cd - bc(Ca - cA)(Ca - cA)(Cb - cB) - bc(Ca - cA)cD - d
+z = - a(Ca - cA)(Cb - cB)(Cb - cB) + a(Cb - cB)Cd - b(Ca - cA)(Ca - cA)(Cb - cB) - b(Ca - cA)cD - (d/c)
+
+
+
+
+
+
+-------
+A similar equation involving x and z is true when
+(x + Bd/(Ba - bA)) : (z - bD/(Bc - bC))  ::  (Bc - bC) : (Ba - bA)
+
+
+So one possible pair of values of (x + Cd/(Ca - cA)) and (y - cD/(Cb - cB))
+is (Cb - cB) and (Ca - cA)
+Then x = (Cb - cB) - Cd/(Ca - cA)  and  y = (Ca - cA) + cD/(Cb - cB)
+Scaling them both up by a factor of (Ca - cA)(Cb - cB) maintains the ratio and gives:
+x = (Ca - cA)(Cb - cB)(Cb - cB) - (Cb - cB)Cd
+y = (Ca - cA)(Ca - cA)(Cb - cB) + (Ca - cA)cD
+
+And one possible pair of values of (x + Bd/(Ba - bA)) and (z - bD/(Bc - bC))
+is (Bc - bC) and (Ba - bA)
+Then x = (Bc - bC) - Bd/(Ba - bA)  and  z = (Ba - bA) + bD/(Bc - bC)
+Scaling them both up by a factor of (Ba - bA)(Bc - bC) maintains the ratio and gives:
+x = (Ba - bA)(Bc - bC)(Bc - bC) - (Bc - bC)Bd
+y = (Ba - bA)(Ba - bA)(Bc - bC) + (Ba - bA)bD
+
+
+
+

@@ -1,0 +1,33 @@
+Find the shortest (perpendicular) distance from a point p0 with coordinates (x0, y0, z0)
+to a plane with equation ax + by + cz + d = 0.
+
+Method: 
+1. Shift the reference frame so that the point is at origin
+2. Find a normal to the plane through origin
+3. Find the intersection of this normal with the plane
+4. Find the distance from origin to the intersection
+
+
+1.
+p0 now has coordinates (0,0,0)
+
+The plane now has equation:
+a(x+x0) + b(y+y0) + c(z+z0) + d = 0
+ax + by + cz + (ax0 + by0 + cz0 + d) = 0
+
+2.
+The normal has vector (a, b, c) and passes through (0, 0, 0)
+Its parametric form is (at, bt, ct)
+
+3.
+If (aa + bb + cc) is not zero, (which it can only be if a, b and c are zero - an impossibility for a plane),
+then at the intersection of the normal and the plane (formula from the intersection of a plane and a line):
+t = -(0a + 0b + 0c + (ax0 + by0 + cz0 + d))/(aa + bb + cc) 
+t = -(ax0 + by0 + cz0 + d)/(aa + bb + cc) 
+So the intersection point is ( -a(ax0 + by0 + cz0 + d)/(aa + bb + cc) , -b(ax0 + by0 + cz0 + d)/(aa + bb + cc) , -c(ax0 + by0 + cz0 + d)/(aa + bb + cc) )
+
+4.
+The distance from origin to this intersection is:
+sqrt{ (aa + bb + cc) * (ax0 + by0 + cz0 - d)^2/(aa + bb + cc)^2 }
+sqrt{ (ax0 + by0 + cz0 - d)^2/(aa + bb + cc) }
+abs(ax0 + by0 + cz0 - d)/sqrt(aa + bb + cc)

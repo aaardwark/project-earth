@@ -1,0 +1,44 @@
+Find the intersection of two planes:
+ax + by + cz + d = 0
+Ax + By + Cz + D = 0
+
+If identical (a:A :: b:B :: c:C :: d:D), return either one of them.
+If parallel (a:A :: b:B :: c:C) but not identical, return None.
+If not parallel, return the Line that lies on both of them.
+
+For now ignore d and D, treating both planes as if they pass through origin. Then:
+ax + by + cz = 0 = Ax + By + Cz
+Cax + Cby + Ccz = 0 = cAx + cBy + cCz
+Cax + Cby = - cCz = cAx + cBy
+(Ca - cA)x + (Cb - cB)y = (- cCz) - (- cCz) = 0
+(Ca - cA)x = (cB - Cb)y
+
+Hence x : y  ::  (cB - Cb) : (Ca - cA)
+One x, y pair is (cB - Cb) , (Ca - cA)
+Now find z such that the resulting point lies on the plane (the one through origin).
+ax + by + cz = 0
+a(cB - Cb) + b(Ca - cA) + cz = 0
+acB - aCb + bCa - bcA + cz = 0
+acB - bcA + cz = 0
+cz = bcA - acB
+z = (bA - aB)
+
+We already know that both planes pass through (0,0,0) 
+So we can say that the intersection line has vector:
+( (cB - Cb) , (Ca - cA) , (bA - aB) )
+This vector is zero when aB = -bA and cB = -Cb and Ca = -cA
+
+
+The task now is to find a point that lies on both of the original planes (accounting for d and D).
+Going back to the planes' equations:
+
+ax + by + d = -cz   and   Ax + By + D = -Cz
+C(ax + by + d) = -Ccz   and   c(Ax + By + D) = -Ccz
+C(ax + by + d) - c(Ax + By + D) = (-Ccz) - (-Ccz)
+(Ca-cA)x + (Cb-cB)y + (Cd-cD) = 0
+(Ca-cA)x + (Cb-cB)y = cD - Cd
+
+One possible x, y pair is (Cb-cB) - Cd/(Ca-cA), cD/(Cb-cB) - (Ca-cA)
+
+-cz = a( (Cb-cB) - Cd/(Ca-cA) ) + b( cD/(Cb-cB) - (Ca-cA) ) + d
+-Cz = A( (Cb-cB) - Cd/(Ca-cA) ) + B( cD/(Cb-cB) - (Ca-cA) ) + D

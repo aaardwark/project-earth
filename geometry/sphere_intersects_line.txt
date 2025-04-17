@@ -1,0 +1,17 @@
+Find any intersection points (none if the line does not hit the circle at all, one if the line is tangent, and two if it passes through and through the circle) of:
+
+a line formed by the locus of points (At+B, Ct+D, Et+F) where t takes all real values
+and a sphere formed by all points satisfying (x-a)^2 + (y-b)^2 + (z-c)^2 = r^2
+
+(At+B-a)^2 + (Ct+D-b)^2 + (Et+F-c)^2 = r^2
+AAtt + 2At(B-a) + (B-a)^2 + CCtt + 2Ct(D-b) + (D-b)^2 + EEtt + 2Et(F-c) + (F-c)^2 - rr = 0
+(AA + CC + EE)tt + t(2A(B-a) + 2C(D-b) + 2E(F-c)) + ((B-a)^2 + (D-b)^2 + (F-c)^2 - rr) = 0
+
+This is a nice quadratic which can be solved for t. 
+If the discriminant is negative there are no solutions, so no intersections.
+
+If it is zero there is one solution, -b/2a in the quadratic formula:
+t = -(2A(B-a) + 2C(D-b) + 2E(F-c)) / 2(AA + CC + EE)
+t = (A(a-B) + C(b-D) + E(c-F)) / (AA + CC + EE)
+
+If it is positive there are two solutions, (-b±√(b^2-4ac))/2a in the quadratic formula.

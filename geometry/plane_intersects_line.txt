@@ -1,0 +1,29 @@
+Find any intersections of a line (parametrised by (As+B, Cs+D, Es+F), real s) and a plane (equation ax+by+cz+d=0)
+There are zero if the line is 'parallel' to the plane, infinity (the whole line) if the line lies on the plane, and one in all other cases.
+
+Essentially, check for points on the line that satisfy the requirement for being on the plane:
+a(As+B) + b(Cs+D) + c(Es+F) + d = 0
+aAs + aB + bCs + bD + cEs + cF + d = 0
+
+
+
+For the line to lie on the plane all the constants and coefficients have to independently add up to zero, otherwise changing s will change the RHS.
+
+This can be shown by rearranging as follows:
+aAs + bCs + cEs = -(aB + bD + cF + d) for all s
+(aA + bC + cE)s = -(aB + bD + cF + d) for all s
+The only way this is possible for all s is if the parenthesised expressions are zero.
+
+If only the coefficient of s is zero:
+0s = -k is what the equation will look like.
+This can never happen, so no solutions <=> no intersections (the line is parallel to the plane).
+
+
+If only the constant (RHS) is zero:
+ks = 0 is what the equation will look like.
+This is true only when s is zero. So one intersection (0A + B, 0C + D, 0E + F)
+
+If neither is zero:
+s = -(aB + bD + cF + d)/(aA + bC + cE)
+One intersection (As+B, Cs+D, Es+F), plugging the value of s above.
+This and the above case can be merged, since if RHS is zero, the formula for this case correctly gives s as zero.

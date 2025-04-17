@@ -1,0 +1,49 @@
+Find any intersections of a plane p1 (equation ax + by + cz + d = 0) 
+and another plane p2 (equation Ax + By + Cz + D = 0)
+
+There are none if the planes are parallel, a plane if they lie on each other, a line in all other cases.
+For them to lie on each other one LHS has to be a multiple of the other LHS.
+
+Assuming nonzero c and C,
+z = (ax + by + d)/c 
+z = (Ax + By + D)/C
+
+So for the locus L of points that lie on both planes, their x and y coordinates satisfy:
+(ax + by + d)/c = (Ax + By + D)/C
+C(ax + by + d) = c(Ax + By + D)
+Cax + Cby + Cd = cAx + cBy + cD
+Cax - cAx + Cby - cBy + Cd - cD = 0
+
+In ax+by+c=0 format:
+x(Ca - cA) + y(Cb - cB) + (Cd - cD) = 0
+This equation represents the projection of L onto the xy plane.
+
+(Note that this only requires one of c and C to be nonzero. 
+Visually, at least one of the planes has to be non-vertical. 
+If both are vertical, the projection is a point.)
+
+Parametrise this equation: 
+x = -(Cb-cB)t
+y = (Ca-cA)t - (Cd-cD)/(Cb-cB)
+This is undefined if either: c = C = 0 (the projection is a point) 
+or: Cb = cB (projection of the form x = k; note this is true when c = C = 0), which can be further broken down into either: c = C and b = B, or: c = b and C = B
+
+Case "c = C = 0":
+The projected point's x- and y-coordinates satisfy ax + by + d = 0 and Ax + By + D = 0
+
+Case "Cb = cB":
+The project line has equation x(Ca - cA) + 0y + (Cd - cD) = 0
+x = -(Cd - cD)/(Ca - cA)
+Its parametrisation is ( -(Cd - cD)/(Ca - cA) , t )
+Alternately, to avoid zero division ( -(Cd - cD) , (Ca - cA)t )
+
+
+
+To get the z-coordinate we have to plug the parametrisations back into one of the planes' equation.
+(The plane should have a nonzero z-coefficient. 
+Visually, the plane has to be non-vertical so there is a unique z-coordinate)
+z = (ax + by + d)/c  (let's say p1 is non-vertical)
+z = [-a(Cb-cB)t + b(Ca-cA)t - b(Cd-cD)/(Cb-cB) + d]/c
+z = [(acB-bcA)t + d - (bdC-bcD)/(Cb-cB)]/c
+
+

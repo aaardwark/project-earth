@@ -1,0 +1,81 @@
+Find the unique plane containing three given points, which are assumed to not be collinear: 
+p1 = (x1, y1, z1)
+p2 = (x2, y2, z2)
+p3 = (x3, y3, z3)
+
+Shift the reference frame so that p3 is at origin. 
+This amounts to making two vectors that describe the differences b/w points.
+v1 = p1 - p3 = (x1-x3, y1-y3, z1-z3)
+v2 = p2 - p3 = (x2-x3, y2-y3, z2-z3)
+[ Note: v3 = p3 - p3 = (0, 0, 0) ]
+
+This eliminates unnecessary complicating info so that the coefficients of the plane can be found. 
+Then the constant of the plane can be found by plugging the coefficients back into p1 or p2 or p3.
+
+
+Both of the vectors lie on a plane that is parallel to our unknown plane, and goes through origin. 
+This plane can be found by finding the cross product of 
+(the vector that is perpendicular to both input vectors) v1 and v2, and then finding
+the plane perpendicular to this perpendicular (normal) vector.
+[ Note how the perpendiculars will cancel out ]
+
+
+Any vector perpendicular to v1 must lie on the plane (x1-x3)x + (y1-y3)y + (z1-z3)z = 0
+Likewise, a vector at 90 to v2 will lie on the plane (x2-x3)x + (y2-y3)y + (z2-z3)z = 0
+So a vector that is perpendicular to both v1 and v2 
+will lie along the line formed by the intersection of the two planes.
+
+[ Note: Since the three points are not collinear, the planes can't be parallel, 
+so an intersection line, and therefore a normal vector, does exist. ]
+
+
+To find this normal vector we have to manipulate the equations of the perpendicular planes 
+to yield a relationship between x, y and z for the parametric form of the intersection line:
+
+(x1-x3)x + (y1-y3)y + (z1-z3)z = 0 = (x2-x3)x + (y2-y3)y + (z2-z3)z
+
+(z2-z3)*((x1-x3)x + (y1-y3)y + (z1-z3)z) = 0 = (z1-z3)*((x2-x3)x + (y2-y3)y + (z2-z3)z)
+
+(z2-z3)*((x1-x3)x + (y1-y3)y) = -z(z1-z3)(z2-z3) = (z1-z3)*((x2-x3)x + (y2-y3)y)
+
+(z2-z3)(x1-x3)x + (z2-z3)(y1-y3)y = -z(z1-z3)(z2-z3) = (z1-z3)(x2-x3)x + (z1-z3)(y2-y3)y
+
+0 = ((z1-z3)(x2-x3) - (z2-z3)(x1-x3))x + ((z1-z3)(y2-y3) - (z2-z3)(y1-y3))y
+
+((z2-z3)(x1-x3) - (z1-z3)(x2-x3))x = ((z1-z3)(y2-y3) - (z2-z3)(y1-y3))y
+
+Hence x : y  ::  (z1-z3)(y2-y3) - (z2-z3)(y1-y3) : (z2-z3)(x1-x3) - (z1-z3)(x2-x3) 
+One x, y pair is (z1-z3)(y2-y3) - (z2-z3)(y1-y3) , (z2-z3)(x1-x3) - (z1-z3)(x2-x3) itself.
+
+
+To find z, plug this back into the equation of the first plane: 
+(x1-x3)x + (y1-y3)y + (z1-z3)z = 0
+
+(x1-x3)*((z1-z3)(y2-y3) - (z2-z3)(y1-y3)) + (y1-y3)*((z2-z3)(x1-x3) - (z1-z3)(x2-x3)) + (z1-z3)z = 0
+
+(x1-x3)(z1-z3)(y2-y3) - (y1-y3)(z1-z3)(x2-x3) + (z1-z3)z = 0
+
+(x1-x3)(y2-y3) - (y1-y3)(x2-x3) + z = 0
+
+z = (y1-y3)(x2-x3) - (x1-x3)(y2-y3)
+
+Now that we have one set of solutions for x, y, z, we also have the parametric form of the intersection line, and following easily from that, the normal (cross product) vector:
+x-component = (z1-z3)(y2-y3) - (z2-z3)(y1-y3)
+y-component = (z2-z3)(x1-x3) - (z1-z3)(x2-x3)
+z-component = (y1-y3)(x2-x3) - (x1-x3)(y2-y3)
+
+
+The coefficients of the plane perpendicular to this vector are the respective components of the normal vector. This gives us:
+(x-component)x + (y-component)y + (z-component)z + constant = 0
+
+To find d we have to plug in the coordinates of one of our original points, say p1:
+(x-component)x1 + (y-component)y1 + (z-component)z1 + constant = 0
+
+((z1-z3)(y2-y3) - (z2-z3)(y1-y3))x1 + ((z2-z3)(x1-x3) - (z1-z3)(x2-x3))y1 + ((y1-y3)(x2-x3) - (x1-x3)(y2-y3))z1 + constant = 0
+
+
+constant = - (x-component)x1 - (y-component)y1 - (z-component)z1
+
+constant = ((z2-z3)(y1-y3) - (z1-z3)(y2-y3))x1 + ((z1-z3)(x2-x3) - (z2-z3)(x1-x3))y1 + ((x1-x3)(y2-y3) - (y1-y3)(x2-x3))z1
+
+

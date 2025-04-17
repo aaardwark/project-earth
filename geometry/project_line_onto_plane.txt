@@ -1,0 +1,19 @@
+Project a <line with point (x0,y0,z0) and vector (i,j,k)> onto a <plane with equation ax+by+cz+d=0>, such that a <normal to the plane through each point on the line> passes through the corresponding projected point.
+
+The line can be represented as the locus of points (x0+it, y0+jt, z0+kt) with t taking all real values. 
+A line perpendicular to the plane will have vector (a,b,c), and point (x0+im, y0+jm, z0+km) for some specific real m. Hence this line can be represented as the locus of points (as+x0+im, bs+y0+jm,cs+z0+km) with s taking all real values. 
+
+The formula for the intersection of a plane and a line shows that at the intersection point of <plane with equation ax+by+cz+d=0> and (as+x0+im, bs+y0+jm,cs+z0+km),
+s = -(a(x0+im) + b(y0+jm) + c(z0+km) + d)/(aa+bb+cc)
+s = -m(ai + bj + ck)/(aa+bb+cc) - (ax0 + by0 + cz0 + d)/(aa+bb+cc)
+
+Plugging this value of s into the parametrisation of the perpendicular line gives
+x1 = as+x0+im = x0 - a(ax0+by0+cz0+d)/(aa+bb+cc) + (i - a(ai+bj+ck)/(aa+bb+cc) )m
+y1 = bs+y0+jm = y0 - b(ax0+by0+cz0+d)/(aa+bb+cc) + (j - b(ai+bj+ck)/(aa+bb+cc) )m
+z1 = cs+z0+km = z0 - c(ax0+by0+cz0+d)/(aa+bb+cc) + (k - c(ai+bj+ck)/(aa+bb+cc) )m
+
+From this we see that the projection of the line, which is the locus of points (x1, y1, z1), 
+has point:
+( x0 - a(ax0+by0+cz0+d)/(aa+bb+cc) , y0 - b(ax0+by0+cz0+d)/(aa+bb+cc) , z0 - c(ax0+by0+cz0+d)/(aa+bb+cc) )
+and vector: 
+( i - a(ai+bj+ck)/(aa+bb+cc) , j - b(ai+bj+ck)/(aa+bb+cc) , k - c(ai+bj+ck)/(aa+bb+cc) )

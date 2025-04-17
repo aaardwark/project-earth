@@ -1,0 +1,6 @@
+This is a geocentric model, with the earth represented by a sphere of radius one, centred at origin, with its north pole on the positive side of the vertical axis. The earth's axis is a fixed line in the xz plane, with a positive dz/dx.
+
+The sun is represented by a point. Its distance from origin is the earth-sun distance/earth radius. It follows an anticlockwise elliptical orbit around the earth, in the xy plane, with one focus at origin.
+
+
+

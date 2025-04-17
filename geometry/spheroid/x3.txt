@@ -1,0 +1,19 @@
+x_3 = x_1- (1-\frac{1}{k_2}) \frac{a_2x_1+b_2y_1+c_2z_1}{a_2^2+b_2^2+c_2^2} \left( a_2-a_3 (1-\frac{1}{k_3}) \frac{a_2a_3+b_2b_3+c_2c_3}{a_3^2+b_3^2+c_3^2} \right) -a_3 (1-\frac{1}{k_3}) \frac{a_3x_1+b_3y_1+c_3z_1}{a_3^2+b_3^2+c_3^2}
+\\
+= x-a_1 (1-\frac{1}{k_1}) \frac{a_1x+b_1y+c_1z}{a_1^2+b_1^2+c_1^2} - (1-\frac{1}{k_2}) 
+\frac{(a_2x+b_2y+c_2z) - (a_1a_2+b_1b_2+c_1c_2) (1-\frac{1}{k_1}) \frac{a_1x+b_1y+c_1z}{a_1^2+b_1^2+c_1^2}}{a_2^2+b_2^2+c_2^2}
+\left( a_2 - a_3 (1-\frac{1}{k_3}) \frac{a_2a_3+b_2b_3+c_2c_3}{a_3^2+b_3^2+c_3^2} \right)
+- a_3 (1-\frac{1}{k_3}) \frac{(a_3x+b_3y+c_3z) - (a_1a_3+b_1b_3+c_1c_3) (1-\frac{1}{k_1}) \frac{a_1x+b_1y+c_1z}{a_1^2+b_1^2+c_1^2}}{a_3^2+b_3^2+c_3^2}
+\\
+= x-a_1 (1-\frac{1}{k_1}) \frac{a_1x+b_1y+c_1z}{a_1^2+b_1^2+c_1^2} - (1-\frac{1}{k_2}) 
+\left( \frac{a_2x+b_2y+c_2z}{a_2^2+b_2^2+c_2^2} 
+   - \frac{(1-\frac{1}{k_1}) (a_1a_2+b_1b_2+c_1c_2)}{a_2^2+b_2^2+c_2^2} * \frac{a_1x+b_1y+c_1z}{a_1^2+b_1^2+c_1^2} \right)
+\left( a_2 - a_3 (1-\frac{1}{k_3}) \frac{a_2a_3+b_2b_3+c_2c_3}{a_3^2+b_3^2+c_3^2} \right)
+- a_3 (1-\frac{1}{k_3}) \left( \frac{a_3x+b_3y+c_3z}{a_3^2+b_3^2+c_3^2} - \frac{(1-\frac{1}{k_1}) (a_1a_3+b_1b_3+c_1c_3)}{a_3^2+b_3^2+c_3^2} * \frac{a_1x+b_1y+c_1z}{a_1^2+b_1^2+c_1^2} \right)
+
+\\
+= x- \frac{a_1x+b_1y+c_1z}{a_1^2+b_1^2+c_1^2} \left( a_1 (1-\frac{1}{k_1}) 
+- (1-\frac{1}{k_2}) \frac{(1-\frac{1}{k_1}) (a_1a_2+b_1b_2+c_1c_2)}{a_2^2+b_2^2+c_2^2} \left[ a_2 - a_3 (1-\frac{1}{k_3}) \frac{a_2a_3+b_2b_3+c_2c_3}{a_3^2+b_3^2+c_3^2} \right] 
+- a_3 (1-\frac{1}{k_3}) \frac{(1-\frac{1}{k_1}) (a_1a_3+b_1b_3+c_1c_3)}{a_3^2+b_3^2+c_3^2} 
+\right)
+- \left( (1-\frac{1}{k_2}) \frac{a_2x+b_2y+c_2z}{a_2^2+b_2^2+c_2^2} \left[ a_2 - a_3 (1-\frac{1}{k_3}) \frac{a_2a_3+b_2b_3+c_2c_3}{a_3^2+b_3^2+c_3^2} \right] + a_3 (1-\frac{1}{k_3}) \frac{a_3x+b_3y+c_3z}{a_3^2+b_3^2+c_3^2}\right)

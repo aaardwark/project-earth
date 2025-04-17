@@ -1,0 +1,13 @@
+epoch	J2000.0
+aphelion	152.10×10^6 km, 94.51×10^6 mi, 1.0167 AU
+perihelion	147.10×10^6 km, 91.40×10^6 mi, 0.98329 AU
+semimajor axis	149.60×10^6 km, 92.96×10^6 mi, 1.0000010178 AU
+eccentricity	0.0167086
+inclination	7.155° to Sun's equator, 1.578690° to invariable plane
+longitude of the ascending node	174.9°
+longitude of perihelion	102.9°
+argument of periapsis	288.1°
+period	365.256363004 days
+average orbital speed	29.78 km/s, 18.50 mi/s, 1.07208×105 km/h, 6.6616×10^4 mph
+speed at aphelion	29.29 km/s, 18.20 mi/s
+speed at perihelion	30.29 km/s, 18.82 mi/s

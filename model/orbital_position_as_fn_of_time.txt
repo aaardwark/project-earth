@@ -1,0 +1,77 @@
+Find the position of a body in an elliptical orbit about another body as a function of time.
+
+For a body in a circular orbit, it is easy to find position as a function of time - the rate of motion and the rate of angular motion are constant throughout the orbit. This is not so for a body in elliptical orbit. Rate of motion and rate of angular motion vary. They obey laws, such as Kepler's second law: "A line joining an orbiting body and the central body sweeps out equal areas during equal intervals of time."
+
+Source: https://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion#Position_as_a_function_of_time
+See image: https://upload.wikimedia.org/wikipedia/commons/b/bc/Mean_Anomaly.svg
+Attribution CheCheDaWaff, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons
+
+The model:
+A central body, at point S, one focus of the ellipse
+A point P, the orbiting body - which moves around the ellipse
+Point Z, the perihelion, the point at which the orbiting body is closest to the central body
+Point C, the centre of the ellipse, the midpoint of the foci
+
+Known variables:
+t, the time since perihelion, the point when P coincided with Z
+a, the length of the semimajor axis (the longer 'radius'), |CZ|
+e, the eccentricity (parameter of an ellipse - see bottom), |CS|/a
+b, the length of the semiminor axis (shorter radius), a*sqrt(1-e^2)
+
+The source has chosen to express e in terms of a, and then b in terms of a and e, assuming that both foci are known.
+Alternatively, if only one focus but both a and b are known, e can be expressed in terms of a and b and point C derived from that.
+a, the length of the semimajor axis (the longer 'radius'), |CZ|
+b, the length of the semiminor axis (shorter radius)
+e, the eccentricity (parameter of an ellipse - see bottom), sqrt(1 - b^2/a^2)
+
+
+
+USE OF A LABELLED FIGURE IS HIGHLY RECOMMENDED TO UNDERSTAND THE FOLLOWING. LINK TO AN IMAGE IS PROVIDED ABOVE
+
+Consider a circle centred at C with the major axis as a diameter - in a way, the ellipse stretched along its minor axis till it becomes a circle.
+let X be the projection of the orbiting body to this circle - where P would go if such a stretch was performed
+let Y be the point on the circle such that the sector areas |ZSX| and |ZCY| are equal
+let M be the 'mean anomaly', the angle between Z and Y as seen from C, ∠ZCY
+
+Due to the stretch, the sector areas are related by |ZSP| = b/a * |ZSX|
+By the formula for the area of a sector of a circle, the circular sector area |ZCY| equals a^2M/2
+
+Using the statements above, the area swept since perihelion, |ZSP| equals b/a * |ZSX| = b/a * |ZCY| = b/a * a^2M/2 = abM/2
+Kepler's second law states that this area is proportional to time since perihelion.
+So since abM/2 is proportional to time since perihelion, and a and b are constants, the mean anomaly, M, is proportional to the time, t, since perihelion.
+The constant of proportionality is the 'mean motion', the average angular velocity of P about S, (2π rad)/T, where T is the orbital period.
+
+When the mean anomaly M is computed, the goal is to compute the true anomaly θ. The function θ = f(M) is, however, not elementary.
+Kepler's solution is to use an intermediate variable 
+E, the eccentric anomaly, the angle between Z and X as seen from C, ∠ZCX
+
+First compute E as a function of M by solving Kepler's equation below, and then compute the true anomaly θ = ∠ZSP from the eccentric anomaly E.
+
+Earlier, Y was defined such to satisfy |ZCY| = |ZSX|
+|ZSX| = |ZCX| - |SCX|
+Hence |ZCY| = |ZCX| - |SCX|
+By the formula for the area of a sector of a circle, |ZCX| = a^2E/2
+By the formula for the area of a triangle, |SCX| = 1/2 *|CS|*|DX| = (ae * a sin E)/2 = (e sin E) * a^2/2
+Now we have a^2M/2 = a^2E/2 - (e sin E) * a^2/2
+Division by a^2/2 gives Kepler's equation M = E - e sin E
+Remember that M = t(2π/T), where t is the time since perihelion, and T is the orbital period.
+
+[IMPORTANT]
+This equation gives M as a function of E, whereas we want to find E for a given M.
+That is the inverse problem, which can be approximately solved using iterative numerical algorithms.
+Rearrange Kepler's equation as E = M + e sin E
+Now create a sequence E, defined by Ei+1 = e sin Ei + M
+Let E0 take some arbitrary value, keeping in mind that -π < E ≤ π
+The sequence converges on the exact value of E, and can be calculated with arbitrary precision as a function of t, depending only on how many terms of the sequence are computed.
+
+
+Cartesian position coordinates of the orbiting body with reference to the centre of ellipse are (a cos E, b sin E)
+With reference to the central body, whose coordinates relative to the centre are (|CS| = ae, 0), they are (a cos E – ae, b sin E)
+Remember: E is an angle, measured relative to the perihelion.
+
+The source continues on to derive polar coordinates, but as the present use case is entirely in cartesian coordinates the remainder of the derivation is not reproduced.
+------------------------------------------------------------------------------------------------------------
+
+Choose a line and call it 'the directrix'
+Choose a point not lying on the line and call it 'the focus'
+Any conic section can be defined as the set of all points, each of whose distance to the focus and the directrix are in a constant ratio. That ratio is called the eccentricity.

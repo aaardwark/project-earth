@@ -1,4 +1,4 @@
-import math
+from math import *
 import numbers
 from fractions import Fraction
 """
@@ -30,16 +30,18 @@ class Point:
         return type(point)==Point and self.x==point.x and self.y==point.y and self.z==point.z
 
     def __abs__(self):
-        return float(math.sqrt(self.x*self.x + self.y*self.y + self.z*self.z))
+        return float(sqrt(self.x*self.x + self.y*self.y + self.z*self.z))
     
+    """A Point can have another Point subtracted from it, giving a Vector.
+    A Point can also have a Vector added to it, giving a Point."""
     def __add__(self, vector):
         if type(vector) != Vector:
-            return NotImplemented
+            raise TypeError('Can only add Points to a Point.')
         return Point(self.x+vector.x, self.y+vector.y, self.z+vector.z)
 
     def __sub__(self, point):
         if type(point) != Point:
-            return NotImplemented
+            raise TypeError('Can only subtract Points from a Point.')
         return Vector(self.x-point.x, self.y-point.y, self.z-point.z)
         
     def distance_to(self, geobj):
@@ -47,7 +49,7 @@ class Point:
             x_diff = self.x - geobj.x
             y_diff = self.y - geobj.y
             z_diff = self.z - geobj.z
-            return math.sqrt(x_diff*x_diff + y_diff*y_diff + z_diff*z_diff)
+            return sqrt(x_diff*x_diff + y_diff*y_diff + z_diff*z_diff)
         elif type(geobj) == Line:
             NotImplemented
         elif type(geobj) == Plane:
@@ -77,7 +79,7 @@ class Vector:
         return type(vector)==Vector and self.x==vector.x and self.y==vector.y and self.z==vector.z
     
     def __abs__(self):
-        return float(math.sqrt(self.x*self.x + self.y*self.y + self.z*self.z))
+        return float(sqrt(self.x*self.x + self.y*self.y + self.z*self.z))
     
     def __add__(self, vector):
         if type(vector) != Vector:
@@ -116,7 +118,7 @@ class Vector:
         elif not (abs(self) and abs(vector)):
             raise ValueError('Can only find the angle between two nonzero vectors.')
         cos_angle = self.dot_product(vector)/(abs(self) * abs(vector))
-        return math.acos(cos_angle)
+        return acos(cos_angle)
 
 
 I = Vector(1,0,0)
@@ -194,7 +196,7 @@ class Plane:
                 else:
                     return None
             else:
-                
+                NotImplemented
             
         
         elif type(geobj) == Sphere:
@@ -307,6 +309,12 @@ class Sphere:
         else:
             return (self.centre==sphere.centre and self.radius==sphere.radius)
     
+    def volume(self):
+        return Fraction(pi * self.radius**3 * 4/3)
+    
+    def surface_area(self):
+        return Fraction(pi * self.radius**2 * 4)
+    
     def has_point(self, point):
         if type(point) != Point:
             raise TypeError('Argument to Sphere.has_point must be a Point.')
@@ -346,7 +354,7 @@ class Sphere:
 
 def solve_quadratic(pwr2_coeff, pwr1_coeff, pwr0_coeff):
     if not (isinstance(pwr2_coeff, numbers.Real) and isinstance(pwr1_coeff, numbers.Real) and isinstance(pwr0_coeff, numbers.Real)):
-        raise TypeError('All coefficients must be real numbers')
+        raise TypeError('All coefficients in a quadratic must be real numbers')
     
     a = Fraction(pwr2_coeff)
     b = Fraction(pwr1_coeff)
@@ -359,3 +367,22 @@ def solve_quadratic(pwr2_coeff, pwr1_coeff, pwr0_coeff):
         return ( (-b + discriminant)/(2*a) , (-b - discriminant)/(2*a) )
     else:
         return ( (-b)/(2*a), )
+    
+def rotation_transform(point, centre, angle):
+    if type(point) != Point:
+        raise TypeError('Can only rotate Points.')
+    elif type(centre) != Point:
+        raise TypeError('Centre of rotation has to be a Point.')
+    
+    translated_pt = point - centre
+    modulus = abs(translated_pt)
+
+    def arctrig(sinv, cosv):
+        asinset = {round(asin(sinv), 8), round((pi - asin(sinv))%pi, 8)}
+        acosset = {round(acos(cosv), 8), round(-acos(cosv), 8)}
+        return Fraction( asinset.intersection(acosset).pop() )
+    
+    start_angle = arctrig(translated_pt.y/modulus, translated_pt.x/modulus)
+    rotated_angle = start_angle + angle
+    rotated_pt = Point( modulus*cos(rotated_angle), modulus*sin(rotated_angle) )
+    return rotated_pt + centre

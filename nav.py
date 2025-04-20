@@ -19,7 +19,7 @@ earth_radius = 6378
 
 axial_tilt = Fraction(0.4091) 
 # earth axial tilt, in radians to 4sf
-earth_axis = Line(ORIGIN, Vector(1,0,tan(piF/2 - axial_tilt)))
+earth_axis = Line(ORIGIN, Vector(1,0,tan(pi/2 - axial_tilt)))
 
 eccentricity = Fraction(0.0167)
 # eccentricity of earth-sun orbit, to 3sf

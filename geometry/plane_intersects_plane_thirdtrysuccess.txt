@@ -39,6 +39,20 @@ C(ax + by + d) - c(Ax + By + D) = (-Ccz) - (-Ccz)
 (Ca-cA)x + (Cb-cB)y = cD - Cd
 
 One possible x, y pair is (Cb-cB) - Cd/(Ca-cA), cD/(Cb-cB) - (Ca-cA)
+Then: a( (Cb-cB) - Cd/(Ca-cA) ) + b( cD/(Cb-cB) - (Ca-cA) ) + d = -cz
+[or equally well A( (Cb-cB) - Cd/(Ca-cA) ) + B( cD/(Cb-cB) - (Ca-cA) ) + D = -Cz]
 
--cz = a( (Cb-cB) - Cd/(Ca-cA) ) + b( cD/(Cb-cB) - (Ca-cA) ) + d
--Cz = A( (Cb-cB) - Cd/(Ca-cA) ) + B( cD/(Cb-cB) - (Ca-cA) ) + D
+But c might be zero and we cannot safely divide by it.
+We need x and y to be divisible by c so it can be factored and cancelled out rather than divided out. 
+Eg: if x=cX and y=cY, and -cz = ax + by + d, then -cz = acX + bcY + d
+Multiply our entire equation in x and y by cd.
+
+cd(Ca-cA)x + cd(Cb-cB)y = ccdD - Ccdd
+cd(Ca-cA)[cd(Cb-cB) + ccdD/cd(Ca-cA)] + cd(Cb-cB)[- cd(Ca-cA) - Ccdd/cd(Cb-cB)] = ccdD - Ccdd
+
+[cd(Cb-cB) + ccdD/cd(Ca-cA)] , [- cd(Ca-cA) - Ccdd/cd(Cb-cB)]
+a[cd(Cb-cB) + ccdD/cd(Ca-cA)] + b[- cd(Ca-cA) - Ccdd/cd(Cb-cB)] + d = -cz
+acd(Cb-cB) - bcd(Ca-cA)  + accdD/cd(Ca-cA) - bCcdd/cd(Cb-cB) + cz = -d
+
+
+

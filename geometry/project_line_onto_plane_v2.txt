@@ -1,0 +1,23 @@
+Project a line (x0+it, y0+jt, z0+kt) onto a plane ax+by+cz+d=0, such that a <normal to the plane through each point on the line> passes through the corresponding projected point.
+
+Construct a line perpendicular to the plane that also passes through a given point (x0+im, y0+jm, z0+km) on The line. It has vector (a,b,c) and point (x0+im, y0+jm, z0+km). It can be represented as the locus of points (x0+im+as, y0+jm+bs, z0+km+cs) with s taking all real values. 
+
+At the intersection point of this perpendicular and the plane:
+s = -(a(x0+im) + b(y0+jm) + c(z0+km) + d)/(aa + bb + cc)
+  = -(ax0 + aim + by0 + bjm + cz0 + ckm + d)/(aa + bb + cc)
+  = -(ax0+by0+cz0 + d + m(ai+bj+ck))/(aa + bb + cc)
+(from the formula for the intersection of a plane and a line)
+
+The intersection point's coordinates can be found by substituting this s into
+(x0+im+as, y0+jm+bs, z0+km+cs) 
+
+x1 = x0 + im - a(ax0+by0+cz0 + m(ai+bj+ck))/(aa + bb + cc)
+   = x0 - a(ax0 + by0 + cz0 + d)/(aa + bb + cc) + m(i - a(ai + bj + ck)/(aa + bb + cc))
+
+y1 = y0 - b(ax0 + by0 + cz0 + d)/(aa + bb + cc) + m(j - b(ai + bj + ck)/(aa + bb + cc))
+
+z1 = z0 - c(ax0 + by0 + cz0 + d)/(aa + bb + cc) + m(k - c(ai + bj + ck)/(aa + bb + cc))
+
+Varying m across all reals gives a set of points (x1, y1, z1) which form a line - the projected line.
+Point: x0 - a(ax0 + by0 + cz0 + d)/(aa + bb + cc), y0 - b(ax0 + by0 + cz0 + d)/(aa + bb + cc), z0 - c(ax0 + by0 + cz0 + d)/(aa + bb + cc)
+Vector: i - a(ai + bj + ck)/(aa + bb + cc), j - b(ai + bj + ck)/(aa + bb + cc), k - c(ai + bj + ck)/(aa + bb + cc)

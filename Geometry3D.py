@@ -7,9 +7,13 @@ from fractions import Fraction
 :# FIX - theory issue
 :# BUG - code not working
 """
+'''
+Point (origin), Vector (i,j,k)
+Plane(xy, yz, xz), Line, Sphere
+- Ray, Ellipse, Spheroid
+'''
 """
-class Ray (and class Segment?)
-class Spheroid? class Circle/Ellipse?
+class Spheroid? class Circle/Ellipse? class Segment?
 implement intersections
 rotation transform of a point - any line, any centre
 """
@@ -208,7 +212,8 @@ class Plane:
 
         elif type(geobj) == Plane:
             cross_vector = self.normal_vector().cross_product(geobj.normal_vector())
-            if abs(cross_vector) == 0:
+            if abs(cross_vector) == 0: 
+                # check parallel some other way? cross product only needed for return line vector
                 if self == geobj:
                     return self
                 else:
@@ -245,7 +250,7 @@ class Line:
     def from_points(cls, point1, point2):
         if type(point1)!=Point or type(point2)!=Point or point1==point2:
             raise TypeError(f'{cls.__name__}.from_points requires two different Point arguments.')
-        return cls(point1, abs(point2 - point1))
+        return cls(point1, point2 - point1)
     
     def __repr__(self):
         return f'{self.__class__.__name__}({repr(self.point)}, {repr(self.vector)})'
@@ -264,8 +269,8 @@ class Line:
         return False
 
     def is_parallel_to(self, line):
-        if type(line) != Line:
-            raise TypeError(f'Argument to {self.__class__.__name__}.is_parallel_to must be a Line')
+        if type(line) not in {Line, Ray}:
+            raise TypeError(f'Argument to {self.__class__.__name__}.is_parallel_to must be a Line or Ray.')
         return self.vector.is_parallel_to(line.vector)
         
     def has_point(self, point):
@@ -326,10 +331,38 @@ class Ray(Line):
         if type(other) == Ray:
             return other.point==self.point and self.vector.angle_to(other.vector)==0
         return False
-        
+    
+    def is_parallel_to(self, ray):
+        if type(ray) != Ray:
+            raise TypeError(f'Argument to {self.__class__.__name__}.is_parallel_to must be a Ray.')
+        return self.vector.angle_to(ray.vector) == 0
+    def is_antiparallel_to(self, ray):
+        if type(ray) != Ray:
+            raise TypeError(f'Argument to {self.__class__.__name__}.is_antiparallel_to must be a Ray.')
+        return self.vector.angle_to(ray.vector) == pi
+
+    def has_point(self, point):
+        if type(point) != Point:
+            raise TypeError(f'Argument to {self.__class__.__name__}.has_point must be a Point.')
+        return self.is_parallel_to(Ray.from_points(self.point, point))
+
+    def intersect(self, geobj):
+        line_intersection = super().intersect(geobj)
+        if type(line_intersection) == Line:
+            return Ray(line_intersection.point, line_intersection.vector)
+        elif type(line_intersection) in {Point, type(None)}:
+            return line_intersection
+        else:
+            raise NotImplementedError
+
+    def project_onto_plane(self, plane):
+        line_projection = super().project_onto_plane(plane)
+        if type(line_projection) == Line:
+            return Ray(line_projection.point, line_projection.vector)
+        return line_projection
+
 
 class Sphere:
-    # generalise to Spheroid
     def __init__(self, centre, radius):
         if type(centre) != Point:
             raise TypeError('First argument to Sphere constructor must be a Point.')
@@ -363,6 +396,11 @@ class Sphere:
         z_diff = point.z - sSc.z
         return (x_diff*x_diff + y_diff*y_diff + z_diff*z_diff) == (self.radius*self.radius)
 
+    def encloses_point(self, point): 
+        if type(point) != Point:
+            raise TypeError('Argument to Sphere.encloses_point must be a Point.')
+        return abs(point-self.centre) < self.radius
+
     def intersect(self, geobj):
         sSc = self.centre
         if type(geobj) == Line:
@@ -387,11 +425,12 @@ class Sphere:
     def tangent_plane_at(self, point):
         if type(point)!=Point or not self.has_point(point):
             raise TypeError('Argument to Sphere.tangent_plane_at must be a Point lying on the sphere.')
-        return Plane(point, self.centre - point)
+        return Plane(point, point - self.centre)
 
 
 
 def solve_quadratic(pwr2_coeff, pwr1_coeff, pwr0_coeff):
+    "returns a tuple of length 0, 1 or 2 depending on number of solutions. greater solution (NOT by magnitude) is first"
     if not (isinstance(pwr2_coeff, numbers.Real) and isinstance(pwr1_coeff, numbers.Real) and isinstance(pwr0_coeff, numbers.Real)):
         raise TypeError('All coefficients in a quadratic must be real numbers')
     
@@ -401,22 +440,31 @@ def solve_quadratic(pwr2_coeff, pwr1_coeff, pwr0_coeff):
     
     discriminant = (b*b) - (4*a*c)
     if discriminant<0:
-        return None
+        return ()
     elif discriminant>0:
-        return ( (-b + discriminant)/(2*a) , (-b - discriminant)/(2*a) )
+        return (-b + discriminant)/(2*a) , (-b - discriminant)/(2*a)
     else:
-        return ( (-b)/(2*a), )
+        return -b/(2*a),
 
-rad = lambda angle_in_degrees: angle_in_degrees*pi/180
-deg = lambda angle_in_radians: angle_in_radians*180/pi
+
 
 def arctrig(cosv, sinv):
-        asinset = {round(asin(sinv), 8), round((pi - asin(sinv))%pi, 8)}
-        acosset = {round(acos(cosv), 8), round(-acos(cosv), 8)}
-        return Fraction( asinset.intersection(acosset).pop() )
+    "returns the angle with the sin and cos values passed, or None if no such angle"
+    snip = lambda theta: round(theta, 8) 
+    # we want sets of solutions in [0, 2*pi]
+    # range of math.asin is [-pi/2, pi/2]
+    # range of math.acos is [0, pi]
+    asinset = { snip((asin(sinv)+2*pi)%(2*pi)), snip(pi-asin(sinv)) }
+    acosset = { snip(acos(cosv)), snip(2*pi - acos(cosv)) }
+    
+    commons = asinset.intersection(acosset)
+    if len(commons) == 1:
+        return Fraction(commons.pop())
+    return None
+ 
 
 
-def rotation_xy(point, centre, angle):
+'''def rotation_xy(point, centre, angle):
     if type(point) != Point:
         raise TypeError('Can only rotate Points.')
     elif type(centre) != Point:
@@ -428,6 +476,7 @@ def rotation_xy(point, centre, angle):
     rotated_angle = start_angle + angle
     rotated_pt = Point( modulus*cos(rotated_angle), modulus*sin(rotated_angle) )
     return rotated_pt + centre
+'''
 
 def rotate_about_axis(point, axis_name, angle):
     if type(point) != Point:

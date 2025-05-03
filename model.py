@@ -37,9 +37,9 @@ PERIOD = 365.256
 ##### SETUP #####
 EARTH = Sphere(ORIGIN, EARTH_RADIUS)
 EARTH_AXIS = Z_AXIS
-POINT_ON_EARTH = None
+NORTH_POLE = Point(0,0,EARTH_RADIUS)
 
-ORBITAL_PLANE = Plane.from_coefficients( tan(rad(EARTH_AXIAL_TILT)) , 0, -1, 0)
+ORBITAL_PLANE = Plane.from_coefficients( tan(radians(EARTH_AXIAL_TILT)) , 0, -1, 0)
 
 def compute_eccentric_anomaly(mean_anomaly):
     """mean anomaly is angle representing the duration of the orbit, starting from periapsis, that has been traversed \n
@@ -56,7 +56,7 @@ def sun_position(days_since_periapsis):
     position_1 = Point(SEMIMAJOR*(cos(eccentric_anomaly) - ECCENTRICITY), SEMIMINOR*sin(eccentric_anomaly), 0)
     "in ellipse-axes frame of reference, treating xy plane as orbital plane"
 
-    position_2 = rotate_about_axis(position_1, 'z', rad(LONGITUDE_OF_PERIAPSIS-90))
+    position_2 = rotate_about_axis(position_1, 'z', radians(LONGITUDE_OF_PERIAPSIS-90))
     "in solstice/equinox frame of reference, treating xy plane as orbital plane"
 
     position_3 = rotate_about_axis(position_2, 'y', EARTH_AXIAL_TILT)
@@ -65,16 +65,41 @@ def sun_position(days_since_periapsis):
     return position_3
 
 
-def point_on_earth(time, latitude, longitude_ref):
+def location_on_earth(time, latitude, longitude_ref):
     """time of day as the angle of rotation completed by the earth since 0000 hrs; radians \n
     latitude; degrees \n
     the sun - a reference point to define where on earth noon/midnight are; Point"""
-    latitude_plane = Plane.from_coefficients(0,0,-1, EARTH_RADIUS * sin(rad(latitude)))
-    axis_point_at_lat = Point(0,0, EARTH_RADIUS * sin(rad(latitude)) )
+    ref_longitude = -arctrig(longitude_ref.x, longitude_ref.y)
+    corrected_longitude = ref_longitude - time
+    longitude_vector = Vector(cos(corrected_longitude), sin(corrected_longitude), 0)
+    
+    axis_point_at_lat = Point(0,0, EARTH_RADIUS * sin(radians(latitude)) )
+    ray_through_location = Ray(axis_point_at_lat, longitude_vector)
+    return ray_through_location.intersect(EARTH)
+
+
+def compute_observed_angles(location_on_earth, position_of_sun):
+    location_tangent = EARTH.tangent_plane_at(location_on_earth)
+
+    north_ray = Ray.from_points(location_on_earth, NORTH_POLE)
+    north_ray_proj = north_ray.project_onto_plane(location_tangent)
+    sun_ray = Ray.from_points(location_on_earth, position_of_sun)
+    sun_ray_proj = sun_ray.project_onto_plane(location_tangent)
+    # typerror if location is given as n pole
+    # have to handle case where sun is directly above location - projection will be a point
+
+    bearing = north_ray_proj.vector.angle_to(sun_ray_proj.vector)
+    # angle_to cannot differentiate symmetry
+
+
+def get_inputs():
+    "should return time, latitude and days since periapsis as a tuple. rewrite according to how input is to be taken"
+    time_inp = input('Enter the time in 24 hour format (only numbers - no spaces, dots, etc): ')
+    latitude_inp = input('Enter your latitude in degrees: ')
+    days_since_periapsis_inp = input('Enter number of days since periapsis: ')
+    # process inputs and convert to appropriate format
 
 
 
-
-
-days_since_periapsis = int(input('Enter number of days since periapsis: '))
-SUN = sun_position(days_since_periapsis)
+SUN = sun_position()
+LOCATION = location_on_earth()

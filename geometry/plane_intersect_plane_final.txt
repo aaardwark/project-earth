@@ -1,0 +1,23 @@
+https://math.stackexchange.com/a/4170338
+
+Find the intersection of two planes:
+ax + by + cz + d = 0    and    Ax + By + Cz + D = 0
+
+If identical (a:A :: b:B :: c:C :: d:D), return either one of them.
+If parallel (a:A :: b:B :: c:C) but not identical, return None.
+If not parallel, return the Line that lies on both of them.
+
+The vector of the intersection line is orthogonal to the normal vectors of both the planes -- it will be their cross product. The task now is to find a point that lies on both planes.
+Intrsxn.vector = P1.vector×P2.vector OR P2.vector×P1.vector
+
+Looking in the direction of that vector, the planes look like 2 lines, because we're viewing them both edge-on. If we can characterise those lines, then we can find their intersection, which must lie on the intersection line.
+
+Each plane-line is perpendicular to both its plane and the intersection line -- its vector is therefore the cross product of its plane's vector and the intersection vector.
+L1.vector = P1.vector×Intrsxn.vector OR Intrsxn.vector×P1.vector
+    = P1.vector×(P1.vector×P2.vector) OR P1.vector×(P2.vector×P1.vector) OR (P1.vector×P2.vector)×P1.vector OR (P2.vector×P1.vector)×P1.vector
+L2.vector = P2.vector×Intrsxn.vector OR Intrsxn.vector×P2.vector
+    = P2.vector×(P1.vector×P2.vector) OR P2.vector×(P2.vector×P1.vector) OR (P1.vector×P2.vector)×P2.vector OR (P2.vector×P1.vector)×P2.vector
+
+Each plane-line can be considered to pass through the point on its plane that is closest to origin. ('Considered' because it's not a concrete line, but a line that can be dragged through space (to trace out the plane) -- one can therefore define it as passing through any point that lies on the plane.)
+
+The intersection of these two lines will be a point, which point should lie on both planes.

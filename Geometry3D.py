@@ -40,13 +40,13 @@ class Point:
         return type(other)==Point and self.x==other.x and self.y==other.y and self.z==other.z
 
     def __abs__(self):
-        return float(sqrt(self.x*self.x + self.y*self.y + self.z*self.z))
+        return sqrt(self.x*self.x + self.y*self.y + self.z*self.z)
     
     """A Point can have another Point subtracted from it, giving a Vector.
     A Point can also have a Vector added to it, giving a Point."""
     def __add__(self, vector):
         if type(vector) != Vector:
-            raise TypeError('Can only add Points to a Point.')
+            raise TypeError('Can only add Vectors to a Point.')
         return Point(self.x+vector.x, self.y+vector.y, self.z+vector.z)
 
     def __sub__(self, point):
@@ -211,9 +211,8 @@ class Plane:
             return Point(sol_x, sol_y, sol_z)
 
         elif type(geobj) == Plane:
-            cross_vector = self.normal_vector().cross_product(geobj.normal_vector())
+            cross_vector = Vector.cross_product(self.normal_vector() , geobj.normal_vector())
             if abs(cross_vector) == 0: 
-                # check parallel some other way? cross product only needed for return line vector
                 if self == geobj:
                     return self
                 else:

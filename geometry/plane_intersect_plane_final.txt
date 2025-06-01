@@ -1,23 +1,32 @@
 https://math.stackexchange.com/a/4170338
 
 Find the intersection of two planes:
-ax + by + cz + d = 0    and    Ax + By + Cz + D = 0
+ax + by + cz + d = 0
+and
+Ax + By + Cz + D = 0
 
 If identical (a:A :: b:B :: c:C :: d:D), return either one of them.
 If parallel (a:A :: b:B :: c:C) but not identical, return None.
 If not parallel, return the Line that lies on both of them.
 
-The vector of the intersection line is orthogonal to the normal vectors of both the planes -- it will be their cross product. The task now is to find a point that lies on both planes.
-Intrsxn.vector = P1.vector×P2.vector OR P2.vector×P1.vector
+The vector, T, of the intersection line is orthogonal to the normal vectors of both the planes. 
+It will be their cross product 
+T = (a,b,c)×(A,B,C) OR (A,B,C)×(a,b,c)
+The task now is to find a point that lies on both planes.
 
-Looking in the direction of that vector, the planes look like 2 lines, because we're viewing them both edge-on. If we can characterise those lines, then we can find their intersection, which must lie on the intersection line.
 
-Each plane-line is perpendicular to both its plane and the intersection line -- its vector is therefore the cross product of its plane's vector and the intersection vector.
-L1.vector = P1.vector×Intrsxn.vector OR Intrsxn.vector×P1.vector
-    = P1.vector×(P1.vector×P2.vector) OR P1.vector×(P2.vector×P1.vector) OR (P1.vector×P2.vector)×P1.vector OR (P2.vector×P1.vector)×P1.vector
-L2.vector = P2.vector×Intrsxn.vector OR Intrsxn.vector×P2.vector
-    = P2.vector×(P1.vector×P2.vector) OR P2.vector×(P2.vector×P1.vector) OR (P1.vector×P2.vector)×P2.vector OR (P2.vector×P1.vector)×P2.vector
+Looking in the direction of T, the planes look like 2 lines, because we're viewing them both edge-on. Since there's an infinite number of such lines, we specify that each line passes through the point on its plane that is closest to origin. Let us characterise these lines in the hope that they intersect -- if they do, that point will lie on both planes.
 
-Each plane-line can be considered to pass through the point on its plane that is closest to origin. ('Considered' because it's not a concrete line, but a line that can be dragged through space (to trace out the plane) -- one can therefore define it as passing through any point that lies on the plane.)
+Each plane-line is perpendicular to both its plane and, due to the angle of view, to the intersection line. 
+Its vector is therefore the cross product of its plane's vector and T.
+V1 = (a,b,c)×((a,b,c)×(A,B,C)) OR (a,b,c)×((A,B,C)×(a,b,c)) OR ((a,b,c)×(A,B,C))×(a,b,c) OR ((A,B,C)×(a,b,c))×(a,b,c)
+and
+V2 = (A,B,C)×((a,b,c)×(A,B,C)) OR (A,B,C)×((A,B,C)×(a,b,c)) OR ((a,b,c)×(A,B,C))×(A,B,C) OR ((A,B,C)×(a,b,c))×(A,B,C)
 
-The intersection of these two lines will be a point, which point should lie on both planes.
+Calculation tells us that these are the points closest to origin on the planes.
+P1 = -d * (a,b,c)/(aa+bb+cc)
+and
+P2 = -D * (A,B,C)/(AA+BB+CC)
+
+The vectors P1 - ORIGIN and P2 - ORIGIN are multiples of (a,b,c) and (A,B,C) respectively. T is therefore orthogonal to both these vectors. We see then that the plane through origin that is orthogonal to T contains P1 and P2. Now the nice thing is that since V1 and V2 are also orthogonal to T, this plane also contains the lines defined by V1,P1 and V2,P2 -- that is, the two plane-lines. 
+We can now conclude that as long as V1 and V2 are not parallel (which they aren't if the original planes aren't) the plane-lines must, since they are coplanar, intersect!

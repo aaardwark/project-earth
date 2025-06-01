@@ -9,12 +9,12 @@ from fractions import Fraction
 """
 '''
 Point (origin), Vector (i,j,k)
-Plane(xy, yz, xz), Line, Sphere
+Plane (xy, yz, xz), Line, Sphere
 - Ray, Ellipse, Spheroid
 '''
 """
 class Spheroid? class Circle/Ellipse? class Segment?
-implement intersections
+plane-sphere sphere-sphere ray-*
 rotation transform of a point - any line, any centre
 """
 
@@ -211,19 +211,25 @@ class Plane:
             return Point(sol_x, sol_y, sol_z)
 
         elif type(geobj) == Plane:
-            cross_vector = Vector.cross_product(self.normal_vector() , geobj.normal_vector())
-            if abs(cross_vector) == 0: 
+            intrsxn_vector = Vector.cross_product(self.normal_vector() , geobj.normal_vector())
+            if abs(intrsxn_vector) == 0: 
                 if self == geobj:
                     return self
                 else:
                     return None
             else:
-                raise NotImplementedError
-            
+                self_normal = self.normal_vector()
+                geobj_normal = geobj.normal_vector()
+                self_line_point = Point.from_vector(-self.d * self_normal.as_unit())
+                geobj_line_point = Point.from_vector(-geobj.d * geobj_normal.as_unit())
+                self_line_vector = Vector.cross_product(self_normal, intrsxn_vector)
+                geobj_line_vector = Vector.cross_product(geobj_normal, intrsxn_vector)
+                self_line = Line(self_line_point, self_line_vector)
+                geobj_line = Line(geobj_line_point, geobj_line_vector)
+                return self_line.intersect(geobj_line)
         
         elif type(geobj) == Sphere:
-            raise NotImplementedError
-            
+            return geobj.intersect(self)
         else:
             raise NotImplementedError
 
@@ -292,10 +298,21 @@ class Line:
                 return Point(gLv.x*s + gLp.x, gLv.y*s + gLp.y, gLv.z*s + gLp.z)
             return None
 
+        elif type(geobj) == Ray:
+            raise NotImplementedError
+
         elif type(geobj) == Plane:
             return geobj.intersect(self)
+
         elif type(geobj) == Sphere:
-            raise NotImplementedError
+            gSc = geobj.centre
+            t_sqr_coeff = gLv.x**2 + gLv.y**2 + gLv.z**2
+            const = (gLp.x - gSc.x)**2 + (gLp.y - gSc.y)**2 + (gLp.z - gSc.z)**2 - geobj.radius**2
+
+            t_coeff = 2 * gLv.x * (gLp.x - gSc.x) 
+            t_coeff += 2 * gLv.y * (gLp.y - gSc.y) 
+            t_coeff += 2 * gLv.z * (gLp.z - gSc.z) 
+            return solve_quadratic(t_sqr_coeff, t_coeff, const)
         else:
             raise NotImplementedError
     
@@ -403,16 +420,7 @@ class Sphere:
     def intersect(self, geobj):
         sSc = self.centre
         if type(geobj) == Line:
-            gLp = geobj.point
-            gLv = geobj.vector
-            t_sqr_coeff = gLv.x**2 + gLv.y**2 + gLv.z**2
-            const = (gLp.x - sSc.x)**2 + (gLp.y - sSc.y)**2 + (gLp.z - sSc.z)**2 - self.radius**2
-
-            t_coeff = 2 * gLv.x * (gLp.x - sSc.x) 
-            t_coeff += 2 * gLv.y * (gLp.y - sSc.y) 
-            t_coeff += 2 * gLv.z * (gLp.z - sSc.z) 
-
-            return solve_quadratic(t_sqr_coeff, t_coeff, const)
+            return geobj.intersect(self)
 
         elif type(geobj) == Plane:
             raise NotImplementedError
